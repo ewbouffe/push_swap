@@ -1,0 +1,9 @@
+etapes de l'algo :
+0. faire le parsing de la liste donnee en argument et la preparer pour la suite 
+1. choisir le comparateur -> idealement la valeur mediane
+2. trouver le moyen le plus opti de repartir dans les deux listes
+3. lancer la recursive
+
+
+0. la liste doit comporter uniquement des espaces ou des chiffres, il doit y avoir un maximum d'un espace entre chaque chiffre
+la liste ne doit pas avoir de doublons, et peux avoir plusieurs espaces qui se suivent, et plusieurs arguments, si un argument est mauvais (vide, seulement des espaces), limite aux ints
