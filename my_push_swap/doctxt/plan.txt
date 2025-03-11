@@ -1,0 +1,8 @@
+Push swap to do list :
+1. choisir quel type d'algorythme de tri -> quicksort
+2. coder les fonctions donnees dans l'enonce -> a faire
+
+quicksort a faire :
+1. choisir quel nombre prendre comme pointeur pour diviser les array ?
+2. trouver la meilleure maniere de passer les nombres d'une grille a l'autre
+3. faire une struct pour stocker la size etc
