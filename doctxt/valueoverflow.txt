@@ -1,0 +1,3 @@
+diviser le checker en deux fonctions 
+1. multiple checker -> valeurs necessaires : valeur actuelle , signe , multiplicateur (tout le temps 10 dans ce cas precis), valeur max (int limit ici)
+2. addition checker -> valeurs necessaires : les deux valeurs a additioner , signe , valeur max (int limit)
