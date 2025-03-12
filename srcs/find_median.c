@@ -31,23 +31,48 @@ void	number_of_groups(t_data *data)
 		data->median->groupnumber = data->size / 5 + 1;
 		data->median->lastgroupsize = data->size % 5;
 	}
-	get_groups_size(data);
 	data->median->mdsize = data->median->groupnumber;
+	if (data->median->groupnumber % 2 == 0)
+		get_groups_size_even(data);
+	if (data->median->groupnumber % 2 == 1)
+		get_groups_size_odd(data);
 }
 
-void	get_groups_size(t_data *data)
+void	get_groups_size_even(t_data *data)
 {
-	if (data->median->lastgroupsize % 5 = 1)
+	if (data->median->lastgroupsize % 5 == 3 || data->median->lastgroupsize % 5 == 5) 
 	{
-
+		data->median->bigsize = 2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2) + (data->median->groupnumber / 2 - 1);
+		data->median->svsize =  2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2) + (data->median->groupnumber / 2);
 	}
-	if (data->median->lastgroupsize % 5 = 2)
+	if (data->median->lastgroupsize % 5 == 2 || data->median->lastgroupsize % 5 == 4) 
 	{
-
+		data->median->bigsize = 2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2 - 1) + (data->median->groupnumber / 2 - 1);
+		data->median->svsize =  2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2) + (data->median->groupnumber / 2);
 	}
-	if (data->median->lastgroupsize % 5 = 3)
+	if (data->median->lastgroupsize % 5 == 1) 
 	{
+		data->median->bigsize = 2 * (data->median->groupnumber - 1) + (data->median->groupnumber / 2 - 1);
+		data->median->svsize = 2 * (data->median->groupnumber - 1) + (data->median->groupnumber / 2);
+	}
+}
 
+void	get_groups_size_odd(t_data *data)
+{
+	if (data->median->lastgroupsize % 5 == 1) 
+	{
+		data->median->bigsize = 2 * (data->median->groupnumber - 1) + (data->median->groupnumber / 2);
+		data->median->svsize = 2 * (data->median->groupnumber - 1) + (data->median->groupnumber / 2);
+	}
+	if (data->median->lastgroupsize % 5 == 2 || data->median->lastgroupsize % 5 == 4) 
+	{
+		data->median->bigsize = 2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2 - 1) + (data->median->groupnumber / 2);
+		data->median->svsize =  2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2) + (data->median->groupnumber / 2);
+	}
+	if (data->median->lastgroupsize % 5 == 3 || data->median->lastgroupsize % 5 == 5) 
+	{
+		data->median->bigsize = 2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2) + (data->median->groupnumber / 2);
+		data->median->svsize =  2 * (data->median->groupnumber - 1) + (data->median->lastgroupsize / 2) + (data->median->groupnumber / 2);
 	}
 }
 
@@ -207,7 +232,7 @@ void	store_medians(int **tab, t_data *data)
 	size_t	i;
 	
 	i = 0;
-	data->median->medianvalues = malloc (sizeof(int) * data->median->groupnumber);
+	data->median->medianvalues = malloc (sizeof(int) * data->median->mdsize);
 	if (!data->median->medianvalues)
 		// fonction exit
 	while (i < data->median->groupnumber - 1)
@@ -227,7 +252,7 @@ void	store_smallvalues(int **tab, t_data *data)
 	i = 0;
 	j = 0;
 	k = 0;
-	data->median->smallvalues = malloc (sizeof(int) * (2 * (data->median->groupnumber - 1) + data->median->lastgroupsize / 2) + (data->median->groupnumber / 2));
+	data->median->smallvalues = malloc (sizeof(int) * data->median->svsize);
 	if (!data->median->smallvalues)
 		// fonction exit
 	while (i < data->median->groupnumber - 1)
@@ -254,7 +279,7 @@ void	store_bigvalues(int **tab, t_data *data)
 	i = 0;
 	j = 0;
 	k = data->median->lastgroupsize;
-	data->median->bigvalues = malloc (sizeof(int) * (2 * (data->median->groupnumber - 1) + data->median->lastgroupsize - data->median->lastgroupsize / 2) + (data->median->groupnumber / 2));
+	data->median->bigvalues = malloc (sizeof(int) * data->median->bigsize);
 	if (!data->median->bigvalues)
 		// fonction exit
 	while (i < data->median->groupnumber - 1)
