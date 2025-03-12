@@ -19,10 +19,21 @@ typedef struct s_data
 
 typedef struct s_median
 {
-	int	**smallvalues;
-	int	**medianvalues;
-	int	**bigvalues;
+	// groupe contenant les valeurs plus petites que les meidanes
+	int	*smallvalues;
+	// taille de *smallvalues
+	int	svsize;
+	// groupe contenant toutes les medianes
+	int	*medianvalues;
+	// taille du groupe contenant les medianes
+	int	mdsize;
+	// groupes contenant les valeurs plus grandes que les medianes
+	int	*bigvalues;
+	// taille de *bigvalues
+	int	bigsize;
+	// nombre de groupes crees pour le bfprt
 	int	groupnumber;
+	// taille du dernier groupe cree pour le bfprt
 	int	lastgroupsize;
 }	t_median;
 

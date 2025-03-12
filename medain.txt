@@ -19,3 +19,31 @@ trouver la mediane en utilisant l'algo qsbprt
         - choisir arbitrairement la taille du dernier groupe, dans le cas de 1. ou 3 laisser tel quel, dans le cas de 2 ou 4 diviser ce groupe en deux groupes de taille impair 1,1 3,1
             - dans ce cas il y aura juste a faire un algo de tri qui fonctionne indepedemment de la taille du groupe (traitement de tableaux d'int donc faire attention a toujours avoir la taille)
 apres avoir fait le premier c'est un bien trop grand bourbier, le plus simple est surement de faire un dernier groupe de taille data.median.lastgroup.size =, lors du choix des medianes il suffit de faire taille/2 + 1 pour prendre le bon rang meme dans un groupe pair
+
+
+trouver la taille des groupes : 
+groupe de medianes = data.median.groupnumber (tout le temps)
+groupe *smallvalues = 2 * (data.median.groupnumber - 1) + faire en fonction de lastgroupsize + groupnumber / 2;
+groupe *bigvalues = 2 * (data.median.groupnumber - 1) + faire en fonction de lastgroupsize + - si impair : groupnumber / 2
+                                                                                             - si pair : groupnumber / 2 - 1
+
+valeur de la mediane du dernier groupe :
+
+taille : 1 2 3 4
+small  : 0 1 1 2
+rang   : 0 1 1 2
+big    : 0 0 1 1
+
+faire en fonction de lastgroupsize :
+if (data.median.lastgroupsize % 5 = 1)
++ 0 small/big
+if (data.median.lastgroupsize % 5 = 2)
++ 1 small
++ 0 big
+if (.... = 3)
++ 1 small/big
+if (.... = 4)
++2 small
++1 big
+if (.... = 5)
++ 2 small/big
