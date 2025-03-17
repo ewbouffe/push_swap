@@ -6,7 +6,7 @@
 /*   By: ewbouffe <ewbouffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:22:22 by ewbouffe          #+#    #+#             */
-/*   Updated: 2025/03/09 12:21:59 by ewbouffe         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:08:51 by ewbouffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ void	array_to_tab(char *str, t_data *data)
 	char	**newlist;
 
 	data->size = get_list_size(str);
+	data->median->size = data->size;
 	i = 0;
 	data->tab = malloc(sizeof(int) * data->size);
 	if (!data->tab)
