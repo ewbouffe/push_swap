@@ -1,7 +1,0 @@
-Ordre du parsing :
-1. verifier que tous les arguments contiennent au moins 1 chiffre 
-2. dans le cas ou tous les arguments sont eligibles les join
-3. une fois join ,verifier qu'il n'y a que des chiffre/espaces
-4. verifier qu'il n'y a pas d'overflows
-5. split et atoi les arguments dans un tableau d'ints
-6. verifier qu'il n'y a pas de doublons
