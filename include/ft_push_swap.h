@@ -13,30 +13,37 @@ typedef struct s_data
 	int	*tab;
 	// 0 = la liste donnee en parametre est valide / 1 = la liste donnee en parametre est invalide
 	int	parsing_error;
-	//structure contenant les groupes de valeurs servants a trouver la mediane dans le QSBPRLT
+	// valeur de la mediane
+	int	medianvalue;
+	//structure contenant les groupes de valeurs servants a trouver la mediane dans le BFPRT
 	struct s_median	*median;
 }	t_data;
 
 typedef struct s_median
 {
-	// groupe contenant les valeurs plus petites que les meidanes
-	int	*smallvalues;
-	// taille de *smallvalues
-	int	svsize;
-	// groupe contenant toutes les medianes
-	int	*medianvalues;
-	// taille du groupe contenant les medianes
-	int	mdsize;
-	// groupes contenant les valeurs plus grandes que les medianes
-	int	*bigvalues;
-	// taille de *bigvalues
-	int	bigsize;
+	// nouvelle taille de la liste
+	int	size;
 	// nombre de groupes crees pour le bfprt
 	int	groupnumber;
 	// taille du dernier groupe cree pour le bfprt
 	int	lastgroupsize;
+	// pivot trouve a la fin du process
+	int	pivot;
+	// rang du pivot dans la liste
+	int	pivotindex;
+	// rang recherche dans la liste -> rang precedent - taille du groupe retire
+	int	target;
+	struct	s_median_alloc *alloc;
 }	t_median;
 
+typedef struct s_median_alloc
+{
+	// partie de la liste conservee pour la suite
+	int	*kept;
+	int	**gfive;
+	int	*medians;
+	int	*tab;
+}	t_median_alloc;
 // fonction mere du parsing, verifie, lance toute les fonctions permettant de verifier la conformite de la liste ansi que de la recuperer en int *tab
 void	main_parsing(char **str, t_data *data);
 // Fonction qui verifie que tous les arguments de av contiennent au moins 1 chiffre

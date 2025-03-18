@@ -1,0 +1,7 @@
+
+
+initialisation de la stack :
+- Quelles donnees stocker dans la struct ?
+    - la valeur du maillon
+    - son rang final
+    - la liste suivante, peut-etre la precedente
