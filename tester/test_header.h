@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <limits.h>
+#include <stdio.h>
 
 typedef struct s_data
 {
@@ -12,7 +13,37 @@ typedef struct s_data
 	int	*tab;
 	// 0 = la liste donnee en parametre est valide / 1 = la liste donnee en parametre est invalide
 	int	parsing_error;
+	// valeur de la mediane
+	int	medianvalue;
+	//structure contenant les groupes de valeurs servants a trouver la mediane dans le BFPRT
+	struct s_median	*median;
 }	t_data;
+
+typedef struct s_median
+{
+	// nouvelle taille de la liste
+	int	size;
+	// nombre de groupes crees pour le bfprt
+	size_t	groupnumber;
+	// taille du dernier groupe cree pour le bfprt
+	size_t	lastgroupsize;
+	// pivot trouve a la fin du process
+	int	pivot;
+	// rang du pivot dans la liste
+	int	pivotindex;
+	// rang recherche dans la liste -> rang precedent - taille du groupe retire
+	int	target;
+	struct	s_median_alloc *alloc;
+}	t_median;
+
+typedef struct s_median_alloc
+{
+	// partie de la liste conservee pour la suite
+	int	*kept;
+	int	**gfive;
+	int	*medians;
+	int	*tab;
+}	t_median_alloc;
 
 // fonction mere du parsing, verifie, lance toute les fonctions permettant de verifier la conformite de la liste ansi que de la recuperer en int *tab
 void	main_parsing(char **str, t_data *data);
@@ -31,7 +62,7 @@ void	check_char_validity(char *str, t_data *data);
 // Fonction verifiant que toutes les valeurs de la liste sont comprises entre INT_MAX et INT_MIN, dans le cas contraire data.parsing_error passe a 1
 void	check_value_overflow(char *str, t_data *data);
 // Fonction helper de check_value_overflow, verifie les overflows par la multiplication
-//int	multiplication_overflow_checker(int multiplier, int nb, t_data *data, int sign);
+int	multiplication_overflow_checker(int nb, t_data *data, int sign);
 // Fonction helper de check_value_overflow, verifie les overflows par l'addition
 int	addition_overflow_checker(int nb, char c, t_data *data, int sign);
 // Fonction qui converting un array en tableau d'int afin de faciliter les manipulations plus tard
@@ -48,9 +79,15 @@ void	print_error(void);
 size_t	ft_strlen(char const *str);
 char	**ft_split(const char *s, char c);
 void	free_split(char ***dest, size_t i);
-
-
-
-
+void	bfprt_main(t_data *data);
+void	find_pivot(t_data *data);
+void	init_var(t_data *data);
+void	group_init(t_data *data);
+void	alloc_tabs(t_data *data);
+void	free_tabs(size_t i, t_data *data);
+void	fill_tabs(t_data *data);
+void	*ft_memset(void *s, int c, size_t n);
+void	exiter(t_data *data);
+void	init_struct(t_data *data);
 
 # endif
