@@ -96,7 +96,8 @@ void	make_next_list(t_data *data);
 void	pivot_index_finder(t_data *data);
 void	fill_next_list_btt(t_data *data);
 void	fill_next_list_stt(t_data *data);
-void	make_new_tab(t_data *data);
+void	tab_refresh(t_data *data);
+void	algo_ender(t_data *data);
 
 
 # endif

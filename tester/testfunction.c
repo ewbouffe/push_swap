@@ -10,7 +10,7 @@ int main(void)
 	// size_t	i = 0;
 	// size_t	j = 0;
 	t_data data;
-    size_t size = 83;
+    size_t size = 100;
 	
 	ft_memset(&data, 0, sizeof(t_data));
     data.size = size;
@@ -19,25 +19,11 @@ int main(void)
     data.median.alloc.tab = calloc(data.size, sizeof(int));
     fillstruct(&data);
 	bfprt_main(&data);
-	printf("groupnumber   %zu\n", data.median.groupnumber);
-	printf("lastgroupsize %zu\n", data.median.lastgroupsize);
-	printf("pivot         %d\n", data.median.pivot);
-	printf("pivotindex    %d\n", data.median.pivotindex);
-	printf("median.size   %d\n", data.median.size);
-	printf("size          %d\n", data.size);
-    // sortie(&data);
+	free(data.tab);
     return (0);
 }
 
 // cc -Wall -Wextra -Werror parsingtest.c testfunction.c -g3 -o test && valgrind ./test
-
-void    sortie(t_data *data)
-{
-    if (data->tab)
-        free(data->tab);
-    if (data->median.alloc.tab)
-        free(data->median.alloc.tab);
-}
 
 void    fillstruct(t_data *data)
 {
@@ -66,14 +52,14 @@ void	find_pivot(t_data *data)
 	get_medians(data);
 	get_median(data);
 	make_next_list(data);
-	// if (data->medianvalue == 0)
-	// 	find_pivot(data);
+	if (data->medianvalue == 0)
+		find_pivot(data);
 	return ;
 }
 
 void	init_var(t_data *data)
 {
-	if (data->size % 5 == 0)
+	if (data->median.size % 5 == 0)
 	{
 		data->median.groupnumber = data->median.size / 5;
 		data->median.lastgroupsize = 5;
@@ -86,6 +72,14 @@ void	init_var(t_data *data)
 	data->median.target = data->median.size / 2;
 	data->median.pivot = 0;
 	data->median.pivotindex = 0;
+	printf("groupnumber   %zu\n", data->median.groupnumber);
+	printf("lastgroupsize %zu\n", data->median.lastgroupsize);
+	printf("pivot         %d\n", data->median.pivot);
+	printf("pivotindex    %d\n", data->median.pivotindex);
+	printf("median.size   %d\n", data->median.size);
+	printf("size          %d\n", data->size);
+	printf("target        %d\n", data->median.target);
+	printf("median value  %d\n", data->medianvalue);
 }
 
 void	group_init(t_data *data)
@@ -251,14 +245,11 @@ void	get_median(t_data *data)
 
 void	make_next_list(t_data *data)
 {
-	size_t	i;
-
-	i = 0;
 	pivot_index_finder(data);
 	if (data->median.alloc.kept)
 		free(data->median.alloc.kept);
 	if (data->median.pivotindex == data->median.target)
-		data->medianvalue = data->median.pivot;
+		algo_ender(data);
 	if (data->median.pivotindex > data->median.target)
 	{
 		data->median.size = data->median.pivotindex;
@@ -266,6 +257,8 @@ void	make_next_list(t_data *data)
 		if (!data->median.alloc.kept)
 			exiter(data);
 		fill_next_list_btt(data);
+		tab_refresh(data);
+
 	}
 	if (data->median.pivotindex < data->median.target)
 	{
@@ -274,21 +267,24 @@ void	make_next_list(t_data *data)
 		if (!data->median.alloc.kept)
 			exiter(data);
 		fill_next_list_stt(data);
+		tab_refresh(data);
 	}
-	make_new_tab(data);
 }
 
 void	pivot_index_finder(t_data *data)
 {
 	size_t	i;
+	size_t	j;
 
+	j = 0;
 	i = 0;
-	while (data->median.alloc.tab[i])
+	while ((int)i < data->median.size)
 	{
 		if (data->median.alloc.tab[i] < data->median.pivot)
-			data->median.pivotindex++;
+			j++;
 		i++;
 	}
+	data->median.pivotindex = (int)j;
 }
 
 void	fill_next_list_btt(t_data *data)
@@ -327,11 +323,34 @@ void	fill_next_list_stt(t_data *data)
 	}
 }
 
-void	make_new_tab(t_data *data)
+void	tab_refresh(t_data *data)
 {
-	if (data->median.alloc.tab)
-		free(data->median.alloc.tab);
-	// data->median.alloc.tab = ft_strdup(data->median.alloc.kept);
+	size_t	i;
+
+	i = 0;
+	free(data->median.alloc.tab);
+	data->median.alloc.tab = calloc(data->median.size, sizeof(int));
 	if (!data->median.alloc.tab)
 		exiter(data);
+	while ((int)i < data->median.size)
+	{
+		data->median.alloc.tab[i] = data->median.alloc.kept[i];
+		i++;
+	}
+	i = 0;
+	while ((int)i < data->median.size)
+	{
+		printf("tab[%zu] = %d kept[%zu] = %d\n", i, data->median.alloc.tab[i], i, data->median.alloc.kept[i]);
+		i++;
+	}
+	free(data->median.alloc.tab);
+	free(data->median.alloc.kept);
+}
+
+void	algo_ender(t_data *data)
+{
+	data->medianvalue = data->median.pivot;
+	free(data->median.alloc.tab);
+	if (data->median.alloc.kept)
+		free(data->median.alloc.kept);
 }
