@@ -17,7 +17,7 @@ void	main_parsing(char **str, t_data *data)
 		return ;
 	}
 	array_to_tab(list, data);
-	if (!data->tab || !data->median->alloc->tab)
+	if (!data->tab || !data->median.alloc.tab)
 	{
 		free(list);
 		return ;
@@ -194,11 +194,11 @@ void	array_to_tab(char *str, t_data *data)
 	char	**newlist;
 
 	data->size = get_list_size(str);
-	data->median->size = data->size;
+	data->median.size = data->size;
 	i = 0;
 	data->tab = malloc(sizeof(int) * data->size);
-    data->median->alloc->tab = malloc(sizeof(int) * data->size);
-	if (!data->tab || !data->median->alloc->tab)
+    data->median.alloc.tab = malloc(sizeof(int) * data->size);
+	if (!data->tab || !data->median.alloc.tab)
 		return ;
 	newlist = ft_split((char const *)str, ' ');
 	if (!newlist)
@@ -206,7 +206,7 @@ void	array_to_tab(char *str, t_data *data)
 	while ((int)i < data->size)
 	{
 		data->tab[i] = ft_atoi((const char *)newlist[i]);
-        data->median->alloc->tab[i] = ft_atoi((const char *)newlist[i]);
+        data->median.alloc.tab[i] = ft_atoi((const char *)newlist[i]);
 		i++;
 	}
 	free_split(&newlist, data->size);

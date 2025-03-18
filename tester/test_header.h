@@ -5,19 +5,14 @@
 #include <limits.h>
 #include <stdio.h>
 
-typedef struct s_data
+typedef struct s_median_alloc
 {
-	// nombre de valeurs contenues dans la liste donnee en parametres
-	int	size;
-	// liste de nombre convertie en tableau d'int pour faciliter sa manipulation notamment pour recuperer le pointeur du quicksort
+	// partie de la liste conservee pour la suite
+	int	*kept;
+	int	**gfive;
+	int	*medians;
 	int	*tab;
-	// 0 = la liste donnee en parametre est valide / 1 = la liste donnee en parametre est invalide
-	int	parsing_error;
-	// valeur de la mediane
-	int	medianvalue;
-	//structure contenant les groupes de valeurs servants a trouver la mediane dans le BFPRT
-	struct s_median	*median;
-}	t_data;
+}	t_median_alloc;
 
 typedef struct s_median
 {
@@ -33,17 +28,22 @@ typedef struct s_median
 	int	pivotindex;
 	// rang recherche dans la liste -> rang precedent - taille du groupe retire
 	int	target;
-	struct	s_median_alloc *alloc;
+	struct	s_median_alloc alloc;
 }	t_median;
 
-typedef struct s_median_alloc
+typedef struct s_data
 {
-	// partie de la liste conservee pour la suite
-	int	*kept;
-	int	**gfive;
-	int	*medians;
+	// nombre de valeurs contenues dans la liste donnee en parametres
+	int	size;
+	// liste de nombre convertie en tableau d'int pour faciliter sa manipulation notamment pour recuperer le pointeur du quicksort
 	int	*tab;
-}	t_median_alloc;
+	// 0 = la liste donnee en parametre est valide / 1 = la liste donnee en parametre est invalide
+	int	parsing_error;
+	// valeur de la mediane
+	int	medianvalue;
+	//structure contenant les groupes de valeurs servants a trouver la mediane dans le BFPRT
+	struct s_median	median;
+}	t_data;
 
 // fonction mere du parsing, verifie, lance toute les fonctions permettant de verifier la conformite de la liste ansi que de la recuperer en int *tab
 void	main_parsing(char **str, t_data *data);
@@ -88,6 +88,15 @@ void	free_tabs(size_t i, t_data *data);
 void	fill_tabs(t_data *data);
 void	*ft_memset(void *s, int c, size_t n);
 void	exiter(t_data *data);
-void	init_struct(t_data *data);
+void	get_medians(t_data *data);
+void	sort_int_tab(t_data *data);
+int	*medians_sorter(int *tab, size_t size);
+void	get_median(t_data *data);
+void	make_next_list(t_data *data);
+void	pivot_index_finder(t_data *data);
+void	fill_next_list_btt(t_data *data);
+void	fill_next_list_stt(t_data *data);
+void	make_new_tab(t_data *data);
+
 
 # endif
