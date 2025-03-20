@@ -5,46 +5,41 @@
 #include <limits.h>
 #include <stdio.h>
 
+typedef struct s_pivot
+{
+    size_t gn;
+    size_t lgs;
+    int *tab;
+    int	**tot;
+    int	*medians;
+}   t_pivot;
+
 typedef struct s_median_alloc
 {
-	// partie de la liste conservee pour la suite
-	int	*kept;
-	int	**gfive;
-	int	*medians;
 	int	*tab;
 }	t_median_alloc;
 
-typedef struct s_median
+typedef struct s_BFPRT
 {
-	// nouvelle taille de la liste
 	int	size;
-	// nombre de groupes crees pour le bfprt
-	size_t	groupnumber;
-	// taille du dernier groupe cree pour le bfprt
-	size_t	lastgroupsize;
-	// pivot trouve a la fin du process
+	size_t	gn;
+	size_t	lgs;
 	int	pivot;
-	// rang du pivot dans la liste
 	int	pivotindex;
-	// rang recherche dans la liste -> rang precedent - taille du groupe retire
 	int	target;
-	// number of values removed during last iteration
-	int	removed;
+    // si i = 0, pivot < target, si i = 1, pivot > target
+    int	i;
 	struct	s_median_alloc alloc;
+    struct  s_pivot fpivot;
 }	t_median;
 
 typedef struct s_data
 {
-	// nombre de valeurs contenues dans la liste donnee en parametres
 	int	size;
-	// liste de nombre convertie en tableau d'int pour faciliter sa manipulation notamment pour recuperer le pointeur du quicksort
 	int	*tab;
-	// 0 = la liste donnee en parametre est valide / 1 = la liste donnee en parametre est invalide
 	int	parsing_error;
-	// valeur de la mediane
 	int	medianvalue;
-	//structure contenant les groupes de valeurs servants a trouver la mediane dans le BFPRT
-	struct s_median	median;
+	struct s_BFPRT	median;
 }	t_data;
 
 // fonction mere du parsing, verifie, lance toute les fonctions permettant de verifier la conformite de la liste ansi que de la recuperer en int *tab
@@ -81,5 +76,28 @@ void	print_error(void);
 size_t	ft_strlen(char const *str);
 char	**ft_split(const char *s, char c);
 void	free_split(char ***dest, size_t i);
+void    fillstruct(t_data *data);
+void	bfprt_main(t_data *data);
+void	get_pivot(t_data *data);
+void	init_var(t_data *data);
+void	alloc_tab(t_data *data);
+void	group_maker(t_data *data);
+void	group_filler(t_data *data);
+void	medians_extractor(t_data *data);
+void	group_sorter(t_data *data);
+void	sort_int_tab(int *tab, int size);
+void	median_group_maker(t_data *data);
+void	free_tot(size_t i, t_data *data);
+void	here_we_go_again(t_data *data);
+void	fpivottab_reinit(t_data *data);
+void    pivot_found(t_data *data);
+void	pivot_index_finder(t_data *data);
+void	updated_list_generator(t_data *data);
+void	pivot_is_bigger(t_data *data);
+void	pivot_is_smaller(t_data *data);
+void	fill_updated_list(t_data *data);
+void	median_found(t_data *data);
+void	exiter(t_data *data);
+void	*ft_memset(void *s, int c, size_t n);
 
 # endif

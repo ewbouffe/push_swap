@@ -7,8 +7,6 @@ void    fillstruct(t_data *data);
 
 int main(void)
 {
-	// size_t	i = 0;
-	// size_t	j = 0;
 	t_data data;
     size_t size = 100;
 	
@@ -20,6 +18,7 @@ int main(void)
     fillstruct(&data);
 	bfprt_main(&data);
 	free(data.tab);
+	free(data.median.alloc.tab);
     return (0);
 }
 
@@ -47,6 +46,9 @@ void	bfprt_main(t_data *data)
 
 void	find_pivot(t_data *data)
 {
+	// if (data->median.rcounter == 10)
+	// 	return ;
+	// data->median.rcounter++;
 	init_var(data);
 	group_init(data);
 	get_medians(data);
@@ -57,8 +59,31 @@ void	find_pivot(t_data *data)
 	return ;
 }
 
+// void	init_var(t_data *data)
+// {
+// 	if (data->median.size == data->size)
+// 		data->median.target = data->size / 2;
+// 	if (data->median.size % 5 == 0)
+// 	{
+// 		data->median.groupnumber = data->median.size / 5;
+// 		data->median.lastgroupsize = 5;
+// 	}
+// 	else
+// 	{
+// 		data->median.groupnumber = data->median.size / 5 + 1;
+// 		data->median.lastgroupsize = data->median.size % 5;
+// 	}
+// 	printf("median.size = %d   ", data->median.size);
+// 	printf("median.target = %d   ", data->median.target);
+// 	printf("median.removed = %d   ",data->median.removed);
+// 	data->median.pivot = 0;
+// 	data->median.pivotindex = 0;
+// }
+
 void	init_var(t_data *data)
 {
+	if (data->median.size == data->size)
+		data->median.target = data->size / 2;
 	if (data->median.size % 5 == 0)
 	{
 		data->median.groupnumber = data->median.size / 5;
@@ -69,27 +94,44 @@ void	init_var(t_data *data)
 		data->median.groupnumber = data->median.size / 5 + 1;
 		data->median.lastgroupsize = data->median.size % 5;
 	}
-	data->median.target = data->median.size / 2;
 	data->median.pivot = 0;
 	data->median.pivotindex = 0;
-	printf("groupnumber   %zu\n", data->median.groupnumber);
-	printf("lastgroupsize %zu\n", data->median.lastgroupsize);
-	printf("pivot         %d\n", data->median.pivot);
-	printf("pivotindex    %d\n", data->median.pivotindex);
-	printf("median.size   %d\n", data->median.size);
-	printf("size          %d\n", data->size);
-	printf("target        %d\n", data->median.target);
-	printf("median value  %d\n", data->medianvalue);
 }
+
+// void	group_init(t_data *data)
+// {
+// 	data->median.alloc.gfive = malloc(sizeof(int *) * data->median.groupnumber);
+// 	if (!data->median.alloc.gfive)
+// 		exiter (data);
+// 	alloc_tabs(data);
+// 	fill_tabs(data);
+// }
 
 void	group_init(t_data *data)
 {
-	data->median.alloc.gfive = malloc(sizeof(int *) * data->median.groupnumber);
+	data->median.alloc.gfive = calloc(data->median.groupnumber, sizeof(int));
 	if (!data->median.alloc.gfive)
-		exiter (data);
+		exit (data);
 	alloc_tabs(data);
 	fill_tabs(data);
 }
+
+// void	alloc_tabs(t_data *data)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (i < data->median.groupnumber - 1)
+// 	{
+// 		data->median.alloc.gfive[i] = malloc(sizeof(int) * 5);
+// 		if (!data->median.alloc.gfive[i])
+// 			free_tabs(i, data);
+// 		i++;
+// 	}
+// 	data->median.alloc.gfive[i] = malloc(sizeof(int) * data->median.lastgroupsize);
+// 	if (!data->median.alloc.gfive[i])
+// 		free_tabs(i, data);
+// }
 
 void	alloc_tabs(t_data *data)
 {
@@ -98,12 +140,12 @@ void	alloc_tabs(t_data *data)
 	i = 0;
 	while (i < data->median.groupnumber - 1)
 	{
-		data->median.alloc.gfive[i] = malloc(sizeof(int) * 5);
+		data->median.alloc.gfive[i] = calloc(5, sizeof(int));
 		if (!data->median.alloc.gfive[i])
 			free_tabs(i, data);
 		i++;
 	}
-	data->median.alloc.gfive[i] = malloc(sizeof(int) * data->median.lastgroupsize);
+	data->median.alloc.gfive[i] = calloc(data->median.lastgroupsize, sizeof(int));
 	if (!data->median.alloc.gfive[i])
 		free_tabs(i, data);
 }
@@ -122,6 +164,36 @@ void	free_tabs(size_t i, t_data *data)
 	data->median.alloc.gfive = NULL;
 }
 
+// void	fill_tabs(t_data *data)
+// {
+// 	size_t	i;
+// 	size_t	j;
+// 	size_t	k;
+
+// 	i = 0;
+// 	k = 0;
+// 	while (i < data->median.groupnumber - 1)
+// 	{
+// 		j = 0;
+// 		while (j < 5)
+// 		{
+// 			data->median.alloc.gfive[i][j] = data->median.alloc.tab[k];
+// 			// printf("tab[%zu][%zu] = %d, original = %d\n", i, j, data->median.alloc.gfive[i][j], data->median.alloc.tab[k]);
+// 			j++;
+// 			k++;
+// 		}
+// 		i++;
+// 	}
+// 	j = 0;
+// 	while (j < data->median.lastgroupsize)
+// 	{
+// 		data->median.alloc.gfive[i][j] = data->median.alloc.tab[k];
+// 		// printf("lastab[%zu][%zu] = %d, original = %d\n", i, j, data->median.alloc.gfive[i][j], data->median.alloc.tab[k]);
+// 		j++;
+// 		k++;
+// 	}
+// }
+
 void	fill_tabs(t_data *data)
 {
 	size_t	i;
@@ -136,7 +208,6 @@ void	fill_tabs(t_data *data)
 		while (j < 5)
 		{
 			data->median.alloc.gfive[i][j] = data->median.alloc.tab[k];
-			//printf("tab[%zu][%zu] = %d, original = %d\n", i, j, data->median.alloc.gfive[i][j], data->median.alloc.tab[k]);
 			j++;
 			k++;
 		}
@@ -146,12 +217,10 @@ void	fill_tabs(t_data *data)
 	while (j < data->median.lastgroupsize)
 	{
 		data->median.alloc.gfive[i][j] = data->median.alloc.tab[k];
-		//printf("lastab[%zu][%zu] = %d, original = %d\n", i, j, data->median.alloc.gfive[i][j], data->median.alloc.tab[k]);
 		j++;
 		k++;
 	}
 }
-
 void	exiter(t_data *data)
 {
 	size_t	i;
@@ -176,13 +245,38 @@ void	exiter(t_data *data)
 	exit (1);
 }
 
+// void	get_medians(t_data *data)
+// {
+// 	size_t	i;
+	
+// 	i = 0;
+// 	sort_int_tab(data);
+// 	data->median.alloc.medians = malloc(sizeof(int) * data->median.groupnumber);
+// 	if (!data->median.alloc.medians)
+// 		exiter(data);
+// 	while (i < data->median.groupnumber - 1)
+// 	{
+// 		data->median.alloc.medians[i] = data->median.alloc.gfive[i][3];
+// 		i++;
+// 	}
+// 	data->median.alloc.medians[i] = data->median.alloc.gfive[i][data->median.lastgroupsize / 2];
+// 	// i = 0;
+// 	// while (i < data->median.groupnumber)
+// 	// {
+// 	// 	printf("%d, ", data->median.alloc.medians[i]);
+// 	// 	i++;
+// 	// }
+// 	// printf("\n");
+// 	free_tabs(data->median.groupnumber, data);
+// }
+
 void	get_medians(t_data *data)
 {
 	size_t	i;
-	
+
 	i = 0;
 	sort_int_tab(data);
-	data->median.alloc.medians = malloc(sizeof(int) * data->median.groupnumber);
+	data->median.alloc.medians = calloc(data->median.groupnumber, sizeof(int));
 	if (!data->median.alloc.medians)
 		exiter(data);
 	while (i < data->median.groupnumber - 1)
@@ -191,28 +285,21 @@ void	get_medians(t_data *data)
 		i++;
 	}
 	data->median.alloc.medians[i] = data->median.alloc.gfive[i][data->median.lastgroupsize / 2];
-	// i = 0;
-	// while (i < data->median.groupnumber)
-	// {
-	// 	printf("%d, ", data->median.alloc.medians[i]);
-	// 	i++;
-	// }
-	// printf("\n");
 	free_tabs(data->median.groupnumber, data);
 }
 
-void	sort_int_tab(t_data *data)
-{
-	size_t	i;
+// void	sort_int_tab(t_data *data)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (i < data->median.groupnumber - 1)
-	{
-		medians_sorter(data->median.alloc.gfive[i], 5);
-		i++;
-	}
-	medians_sorter(data->median.alloc.gfive[i], data->median.lastgroupsize);
-}
+// 	i = 0;
+// 	while (i < data->median.groupnumber - 1)
+// 	{
+// 		medians_sorter(data->median.alloc.gfive[i], 5);
+// 		i++;
+// 	}
+// 	medians_sorter(data->median.alloc.gfive[i], data->median.lastgroupsize);
+// }
 
 int	*medians_sorter(int *tab, size_t size)
 {
@@ -252,17 +339,26 @@ void	make_next_list(t_data *data)
 		algo_ender(data);
 	if (data->median.pivotindex > data->median.target)
 	{
+		printf("pivot > mediane \n");
+		// printf("1, %d\n", data->median.target);
+		data->median.removed = data->median.size - data->median.pivotindex;
 		data->median.size = data->median.pivotindex;
+		// printf("2. %d\n", data->median.target);
+
 		data->median.alloc.kept = malloc (sizeof(int) * data->median.size);
 		if (!data->median.alloc.kept)
 			exiter(data);
 		fill_next_list_btt(data);
 		tab_refresh(data);
-
 	}
 	if (data->median.pivotindex < data->median.target)
 	{
+		printf("pivot < mediane\n");
+		// printf("1 = %d\n", data->median.target);
+		data->median.removed = data->median.pivotindex;
+		data->median.target = data->median.target - data->median.removed;
 		data->median.size = data->median.size - data->median.pivotindex;
+		// printf("2 = %d\n", data->median.target);
 		data->median.alloc.kept = malloc(sizeof(int) * data->median.size);
 		if (!data->median.alloc.kept)
 			exiter(data);
@@ -294,7 +390,7 @@ void	fill_next_list_btt(t_data *data)
 
 	i = 0;
 	j = 0;
-	while ((int)i < data->size)
+	while ((int)i < data->median.size)
 	{
 		if (data->median.alloc.tab[i] < data->median.pivot)
 		{
@@ -312,7 +408,7 @@ void	fill_next_list_stt(t_data *data)
 
 	i = 0;
 	j = 0;
-	while ((int)i < data->size)
+	while ((int)i < data->median.size)
 	{
 		if (data->median.alloc.tab[i] > data->median.pivot)
 		{
@@ -337,20 +433,17 @@ void	tab_refresh(t_data *data)
 		data->median.alloc.tab[i] = data->median.alloc.kept[i];
 		i++;
 	}
-	i = 0;
-	while ((int)i < data->median.size)
-	{
-		printf("tab[%zu] = %d kept[%zu] = %d\n", i, data->median.alloc.tab[i], i, data->median.alloc.kept[i]);
-		i++;
-	}
-	free(data->median.alloc.tab);
-	free(data->median.alloc.kept);
+	// i = 0;
+	// while ((int)i < data->median.size)
+	// {
+	// 	// printf("tab[%zu] = %d kept[%zu] = %d\n", i, data->median.alloc.tab[i], i, data->median.alloc.kept[i]);
+	// 	printf("%d, ", data->median.alloc.tab[i]);
+	// 	i++;
+	// }
+	// printf("\n");
 }
 
 void	algo_ender(t_data *data)
 {
 	data->medianvalue = data->median.pivot;
-	free(data->median.alloc.tab);
-	if (data->median.alloc.kept)
-		free(data->median.alloc.kept);
 }
