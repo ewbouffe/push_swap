@@ -4,12 +4,13 @@ void    bfprt_main(t_data *data)
 {
     init_var(data);
     get_pivot(data);
-	printf("Etat de la structure :\n bfprtsize = %d\n bfprt.gn = %zu\nbfprt.fpivot.gn = %zu\nbfprt.lgs = %zu\nbfprt.fpivot.lgs = %zu\n",data->bfprt.size, data->bfprt.gn, data->bfprt.fpivot.gn, data->bfprt.lgs, data->bfprt.fpivot.lgs);
     // updated_list_generator(data);
 }
 
 void	get_pivot(t_data *data)
 {
+		printf("[%d](medians_extractor) fpivot.gn = %zu\n[%d](medians_extractor) fpivot.lgs = %zu\n", data->bfprt.iteration, data->bfprt.fpivot.gn, data->bfprt.iteration, data->bfprt.fpivot.lgs);
+	data->bfprt.iteration++;
     data->bfprt.fpivot.tot = calloc(data->bfprt.fpivot.gn, sizeof(int *));
 	if (!data->bfprt.fpivot.tot)
 		exiter(data);

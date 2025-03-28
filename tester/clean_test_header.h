@@ -31,6 +31,7 @@ typedef struct s_BFPRT
 	int	pivotindex;
 	int	target;
     int	i;
+	int	iteration;
 	struct	s_median_alloc alloc;
     struct  s_pivot fpivot;
 }	t_BFPRT;

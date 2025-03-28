@@ -12,11 +12,11 @@ int main(void)
 	ft_memcpy(data.bfprt.alloc.tab, tab, 140 * sizeof(int));
 	ft_memcpy(data.bfprt.fpivot.tab, tab, 140 * sizeof(int));
 	ft_memcpy(data.tab, tab, 140 * sizeof(int));
-	data.size = 110;
-	data.bfprt.size = 110;
+	data.size = 100;
+	data.bfprt.size = 100;
 	// partie du main pour tester le pivot finder
 	bfprt_main(&data);
-	printf("pivot trouve : %d\nson index : %d\n", data.bfprt.pivot, data.bfprt.pivotindex);
+	printf("(main) pivot trouve : %d\nson index : %d\n", data.bfprt.pivot, data.bfprt.pivotindex);
 	if (data.bfprt.alloc.tab)
 		free(data.bfprt.alloc.tab);
 	if (data.bfprt.fpivot.tab)
