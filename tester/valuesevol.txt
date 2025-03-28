@@ -1,0 +1,71 @@
+BFPRT_MAIN
+valeurs utilisees : data.size, data.median.size, data.median.gn, data.median.lgs, data.median.fpivot.gn, data.median.fpivot.lgs, data.median.target, data.median.pivot, data.median.pivotindex
+valeurs modifiees : data.median.gn, data.median.lgs, data.median.fpivot.lgs, data.median.fpivot.gn
+
+INIT VAR
+valeurs utilisees : /
+valeurs modifiees : /
+
+GETPIVOT
+valeurs utilisees : data.median.fpivot.gn, data.median.fpivot.tot(init)
+valeurs modifiees : /
+
+ALLOCTAB
+valeurs utilisees : data.median.fpivot.gn, data.median.fpivot.tot(init)
+valeurs modifiees : /
+
+GROUPMAKER
+valeurs utilisees : data.median.fpivot.gn, data.median.fpivot.lgs
+valeurs modifiees : data.median.fpivot.tot
+
+GROUPFILLER
+valeurs utilisees : data.median.fpivot.gn, data.median.fpivot.lgs, data.median.fpivot.tab
+valeurs modifiees : data.median.fpivot.tot
+
+MEDIANEXTRACTOR
+valeurs utilisees : data.median.fpivot.medians
+valeurs modifiees : data.median.pivot, data.median.pivotindex, data.median.fpivot.medians(free)
+
+GROUPSORTER
+valeurs utilisees : data.median.fpivot.gn, data.median.fpivot.lgs
+valeurs modifiees : data.median.fpivot.tot
+
+SORTINTTAB
+valeurs utilisees : /
+valeurs modifiees : /
+
+MEDIANGROUPMAKER
+valeurs utilisees : data.median.fpivot.gn, data.median.fpivot.lgs
+valeurs modifiees : data.median.fpivot.medians(init), data.median.fpivot.tot(free)
+
+HEREWEGOAGAIN
+valeurs utilisees : data.median.fpivot.gn
+valeurs modifiees : data.median.fpivot.gn, data.median.fpivot.lgs, data.median.fpivot.medians(free)
+
+FPIVOTTABREINIT
+valeurs utilisees : data.median.fpivot.gn
+valeurs modifiees : data.median.fpivot.tab(free), data.median.fpivot.tab(alloc)
+
+PIVOTINDEXFINDER
+valeurs utilisees : data.median.size, data.median.fpivot.tab, data.median.pivot
+valeurs modifiees : data.median.pivotindex
+
+UPDATEDLISTGENERATOR
+valeurs utilisees : /
+valeurs modifiees : /
+
+PIVOTISBIGGER
+valeurs utilisees : data.median.size, data.median.pivotindex
+valeurs modifiees : data.median.oldsize, data.median.size, data.median.alloc.tab(free, alloc), data.median.fpivot.tab(free,alloc), data.median.i
+
+PIVOTISSMALLER
+valeurs utilisees : data.median.size, data.median.pivotindex
+valeurs modifiees : data.median.oldsize, data.median.i, data.median.alloc.tab(free, alloc), data.median.fpivot.tab(free, alloc), data.median.size, data.median.target
+
+FILLUPDATEDLIST
+valeurs utilisees : data.median.oldsize, data.tab, data.median.i, data.median.pivot
+valeurs modifiees : data.median.alloc.tab, data.median.fpivot.tab
+
+MEDIANFOUND
+valeurs utilisees : data.median.pivot
+valeurs modifiees : data.median.value, data.median.fpivot.tab(free), data.median.alloc.tab(free)

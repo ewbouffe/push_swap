@@ -1,9 +1,10 @@
-#ifndef TEST_HEADER_H
-# define TEST_HEADER_H
+#ifndef CLEAN_TEST_HEADER_H
+# define CLEAN_TEST_HEADER_H
 
 #include <stdlib.h>
 #include <limits.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct s_pivot
 {
@@ -16,6 +17,7 @@ typedef struct s_pivot
 
 typedef struct s_median_alloc
 {
+	int	*oldtab;
 	int	*tab;
 }	t_median_alloc;
 
@@ -28,7 +30,6 @@ typedef struct s_BFPRT
 	int	pivot;
 	int	pivotindex;
 	int	target;
-    // si i = 0, pivot < target, si i = 1, pivot > target
     int	i;
 	struct	s_median_alloc alloc;
     struct  s_pivot fpivot;
@@ -40,7 +41,7 @@ typedef struct s_data
 	int	*tab;
 	int	parsing_error;
 	int	medianvalue;
-	struct s_BFPRT	median;
+	struct s_BFPRT	bfprt;
 }	t_data;
 
 // fonction mere du parsing, verifie, lance toute les fonctions permettant de verifier la conformite de la liste ansi que de la recuperer en int *tab
@@ -91,14 +92,15 @@ void	median_group_maker(t_data *data);
 void	free_tot(size_t i, t_data *data);
 void	here_we_go_again(t_data *data);
 void	fpivottab_reinit(t_data *data);
-void    pivot_found(t_data *data);
 void	pivot_index_finder(t_data *data);
 void	updated_list_generator(t_data *data);
 void	pivot_is_bigger(t_data *data);
 void	pivot_is_smaller(t_data *data);
 void	fill_updated_list(t_data *data);
-void	median_found(t_data *data);
+void	target_found(t_data *data);
 void	exiter(t_data *data);
 void	*ft_memset(void *s, int c, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+void	bfprt_main(t_data *data);
 
-# endif
+#endif

@@ -423,3 +423,4 @@ char	**ft_split(const char *s, char c)
 	dest[count_words(s, c)] = 0;
 	return (dest);
 }
+

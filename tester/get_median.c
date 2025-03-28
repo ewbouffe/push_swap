@@ -134,7 +134,6 @@ void	medians_extractor(t_data *data)
 		pivot_index_finder(data);
 		free(data->median.fpivot.medians);
 	}
-
 }
 
 void	group_sorter(t_data *data)
@@ -286,7 +285,6 @@ void	pivot_is_bigger(t_data *data)
 	if (!data->median.alloc.tab || !data->median.fpivot.tab)
 		exiter(data);
 	fill_updated_list(data);
-
 }
 
 void	pivot_is_smaller(t_data *data)
