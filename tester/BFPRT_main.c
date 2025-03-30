@@ -4,13 +4,15 @@ void    bfprt_main(t_data *data)
 {
     init_var(data);
     get_pivot(data);
-    // updated_list_generator(data);
+    updated_list_generator(data);
 }
 
 void	get_pivot(t_data *data)
 {
-		printf("[%d](medians_extractor) fpivot.gn = %zu\n[%d](medians_extractor) fpivot.lgs = %zu\n", data->bfprt.iteration, data->bfprt.fpivot.gn, data->bfprt.iteration, data->bfprt.fpivot.lgs);
 	data->bfprt.iteration++;
+	if (data->bfprt.iteration == 5)
+		exit(1);
+	printf("[%d](medians_extractor) fpivot.gn = %zu\n[%d](medians_extractor) fpivot.lgs = %zu\n", data->bfprt.iteration, data->bfprt.fpivot.gn, data->bfprt.iteration, data->bfprt.fpivot.lgs);
     data->bfprt.fpivot.tot = calloc(data->bfprt.fpivot.gn, sizeof(int *));
 	if (!data->bfprt.fpivot.tot)
 		exiter(data);

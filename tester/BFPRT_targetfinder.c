@@ -22,6 +22,7 @@ void	pivot_is_smaller(t_data *data)
 	data->bfprt.i = 0;
 	data->bfprt.oldsize =data->bfprt.size;
 	data->bfprt.alloc.oldtab = calloc(data->bfprt.oldsize, sizeof(int));
+	data->bfprt.target = data->bfprt.target - data->bfprt.pivotindex;
 	if (!data->bfprt.alloc.oldtab)
 		exiter(data);
 	data->bfprt.alloc.oldtab = ft_memcpy(data->bfprt.alloc.oldtab, data->bfprt.alloc.tab, data->bfprt.oldsize);

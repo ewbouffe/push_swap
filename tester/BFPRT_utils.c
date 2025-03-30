@@ -54,5 +54,6 @@ void	exiter(t_data *data)
 		free(data->bfprt.alloc.oldtab);
 	if (data->bfprt.alloc.tab)
 		free(data->bfprt.alloc.tab);
+	exit(1);
 }
 
