@@ -13,6 +13,7 @@ typedef struct s_pivot
     int *tab;
     int	**tot;
     int	*medians;
+	int	counter;
 }   t_pivot;
 
 typedef struct s_median_alloc

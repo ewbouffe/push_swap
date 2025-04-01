@@ -14,7 +14,7 @@ test :
 	$(CC) $(CFLAGS) $(SRCS) -o test && ./test
 
 testv :
-	$(CC) $(CFLAGS) $(SRCS) -o test && valgrind --leak-check=full --track-origins=yes ./test 
+	$(CC) $(CFLAGS) $(SRCS) -o test && valgrind --leak-check=full --show-leak-kinds=all ./test 
 
 show_only_errors :
 	$(CC) $(CFLAGS) $(SRCS) -o test
