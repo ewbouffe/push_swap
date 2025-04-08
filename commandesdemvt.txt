@@ -1,0 +1,13 @@
+sa = echange de position entre les deux premiere valeurs de la pile a
+sb = echange de position entre les deux premiere valeurs de la pile b
+ss = sa + sb
+pa = met le premier element de la pile b en haut de la pile a
+pb = met le premier element de la pile a en haut de la pile b
+ra = fait monter tous les elements de la pile a de 1, le premier element devient le dernier
+rb = fait monter tous les elements de la pile b de 1, le premier element devient le dernier
+rr = ra + rb
+rra = fait descendre tous les elements de la pile a de 1, le dernier devient le premier
+rrb = fait descendre tout les elements de la pile b de 1, le dernier devient le premier
+rrr = rra + rrb
+
+faire une fonction contenant tous les printf

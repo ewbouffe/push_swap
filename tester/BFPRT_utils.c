@@ -43,7 +43,10 @@ void	free_tot(size_t i, t_data *data)
 void	exiter(t_data *data)
 {
 	if (data->tab)
+	{
 		free(data->tab);
+		data->tab = NULL;
+	}
 	if (data->bfprt.fpivot.tot)
 		free_tot(data->bfprt.fpivot.gn, data);
 	if (data->bfprt.fpivot.medians)

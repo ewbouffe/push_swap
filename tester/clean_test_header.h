@@ -37,6 +37,12 @@ typedef struct s_BFPRT
     struct  s_pivot fpivot;
 }	t_BFPRT;
 
+typedef	struct s_pile
+{
+	int	value;
+	int	part;
+}	t_pile;
+
 typedef struct s_data
 {
 	int	size;
@@ -44,6 +50,7 @@ typedef struct s_data
 	int	parsing_error;
 	int	medianvalue;
 	struct s_BFPRT	bfprt;
+	struct s_pile	pile;
 }	t_data;
 
 // fonction mere du parsing, verifie, lance toute les fonctions permettant de verifier la conformite de la liste ansi que de la recuperer en int *tab
