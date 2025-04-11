@@ -47,10 +47,13 @@ typedef struct s_data
 {
 	int	size;
 	int	*tab;
+	int	*cl;
+	int	cln;
 	int	parsing_error;
 	int	medianvalue;
 	struct s_BFPRT	bfprt;
-	struct s_pile	pile;
+	struct s_pile	*pile_a;
+	struct s_pile	*pile_b;
 }	t_data;
 
 // fonction mere du parsing, verifie, lance toute les fonctions permettant de verifier la conformite de la liste ansi que de la recuperer en int *tab

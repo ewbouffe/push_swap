@@ -1,0 +1,21 @@
+chunksort :
+taille 10, 30 probablement
+recuperation des limites de mes chunks via bfprt
+faire le pretri dans la pile b -> est-ce efficace de transferer toutes les valeurs dans la pile_b -> laisser le dernier groupe de valeurs dans a evite des coups theoriquement
+une fois les chunks pretries lors de leur reintegration dans la pile_a les trier -> compararer pile_b[0] et pile_a[0]
+
+
+Creation des chunks :
+lors du transfert dans b dois-je faire un algo qui calcule ce qui est le moins couteux a mettre dans son chunk ?? -> probablement un gain d'efficacite notamment grace a l'utilisation potentielle des double mvs
+
+
+
+radix sort :
+interressant
+modulo des valeurs into transfert en b
+
+
+fonctions necessaires :
+analyse de la valeur en haut de la pile a (sa valeur, celle de pile_b[1], son chunk)
+- si elle fait partie du dernier chunk ignoree et verifier si la valeur suivante necessitera de faire bouger la pile b
+- dans le cas contraire, verifier si 
